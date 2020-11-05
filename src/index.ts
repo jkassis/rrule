@@ -16,16 +16,16 @@
 
 import RRule from './rrule'
 import RRuleSet from './rruleset'
+export { NLP } from './nlp/index'
+export {
+  RRule,
+  RRuleSet
+}
 
 export { rrulestr } from './rrulestr'
 export { Frequency, ByWeekday, Options } from './types'
 export { Weekday, WeekdayStr } from './weekday'
 export { RRuleStrOptions } from './rrulestr'
 
-export {
-  RRule,
-  RRuleSet
-}
 
 export default RRule
-

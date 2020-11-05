@@ -30,6 +30,8 @@ ToText.IMPLEMENTED[RRule.WEEKLY] = common
 ToText.IMPLEMENTED[RRule.MONTHLY] = common
 ToText.IMPLEMENTED[RRule.YEARLY] = ['byweekno', 'byyearday'].concat(common)
 
+const { isFullyConvertible } = ToText
+
 // =============================================================================
 // Export
 // =============================================================================
@@ -38,13 +40,14 @@ const toText = function (rrule: RRule, gettext?: GetText, language?: Language, d
   return new ToText(rrule, gettext, language, dateFormatter).toString()
 }
 
-export const { isFullyConvertible } = ToText
 
-export let Nlp: {
-  isFullyConvertible: typeof isFullyConvertible
-  toText: typeof toText
-} = { isFullyConvertible, toText }
-
-export function fromText(text: string, language ?: Language) {
+function fromText (text: string, language ?: Language) {
   return new RRule(parseText(text, language) || undefined)
+}
+
+export const NLP = {
+  toText,
+  fromText,
+  parseText,
+  isFullyConvertible
 }
