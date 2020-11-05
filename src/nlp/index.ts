@@ -1,6 +1,6 @@
 import ToText, { DateFormatter, GetText } from './totext'
 import ENGLISH, { Language } from './i18n'
-import RRule from '../index'
+import RRule from '../rrule'
 import parseText from './parsetext'
 
 /*!
