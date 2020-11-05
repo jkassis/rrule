@@ -1,4 +1,4 @@
-import { ParsedOptions } from '../types'
+import { Frequency, ParsedOptions } from '../types'
 import RRule from '../rrule'
 import { empty, repeat, pymod } from '../helpers'
 
@@ -23,7 +23,7 @@ export function rebuildMonth (
   }
 
   let ranges: number[][] = []
-  if (options.freq === RRule.YEARLY) {
+  if (options.freq === Frequency.YEARLY) {
     if (empty(options.bymonth)) {
       ranges = [[0, yearlen]]
     } else {
@@ -32,7 +32,7 @@ export function rebuildMonth (
         ranges.push(mrange.slice(month - 1, month + 1))
       }
     }
-  } else if (options.freq === RRule.MONTHLY) {
+  } else if (options.freq === Frequency.MONTHLY) {
     ranges = [mrange.slice(month - 1, month + 1)]
   }
 

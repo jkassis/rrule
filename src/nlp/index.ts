@@ -2,6 +2,7 @@ import ToText, { DateFormatter, GetText } from './totext'
 import ENGLISH, { Language } from './i18n'
 import RRule from '../rrule'
 import parseText from './parsetext'
+import { Frequency } from '../types'
 
 /*!
 * rrule.js - Library for working with recurrence rules for calendar dates.
@@ -23,12 +24,12 @@ const common = [
 ]
 
 ToText.IMPLEMENTED = []
-ToText.IMPLEMENTED[RRule.HOURLY] = common
-ToText.IMPLEMENTED[RRule.MINUTELY] = common
-ToText.IMPLEMENTED[RRule.DAILY] = ['byhour'].concat(common)
-ToText.IMPLEMENTED[RRule.WEEKLY] = common
-ToText.IMPLEMENTED[RRule.MONTHLY] = common
-ToText.IMPLEMENTED[RRule.YEARLY] = ['byweekno', 'byyearday'].concat(common)
+ToText.IMPLEMENTED[Frequency.HOURLY] = common
+ToText.IMPLEMENTED[Frequency.MINUTELY] = common
+ToText.IMPLEMENTED[Frequency.DAILY] = ['byhour'].concat(common)
+ToText.IMPLEMENTED[Frequency.WEEKLY] = common
+ToText.IMPLEMENTED[Frequency.MONTHLY] = common
+ToText.IMPLEMENTED[Frequency.YEARLY] = ['byweekno', 'byyearday'].concat(common)
 
 const { isFullyConvertible } = ToText
 

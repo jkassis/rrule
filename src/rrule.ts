@@ -2,7 +2,7 @@ import dateutil from './dateutil'
 
 import IterResult, { IterArgs } from './iterresult'
 import CallbackIterResult from './callbackiterresult'
-import { ParsedOptions, Options, Frequency, QueryMethods, QueryMethodTypes, IterResultType } from './types'
+import { Days, ParsedOptions, Options, Frequency, QueryMethods, QueryMethodTypes, IterResultType } from './types'
 import { parseOptions, initializeOptions } from './parseoptions'
 import { parseString } from './parsestring'
 import { optionsToString } from './optionstostring'
@@ -14,15 +14,6 @@ import { iter } from './iter/index'
 // RRule
 // =============================================================================
 
-export const Days = {
-  MO: new Weekday(0),
-  TU: new Weekday(1),
-  WE: new Weekday(2),
-  TH: new Weekday(3),
-  FR: new Weekday(4),
-  SA: new Weekday(5),
-  SU: new Weekday(6)
-}
 
 export const DEFAULT_OPTIONS: Options = {
   freq: Frequency.YEARLY,
@@ -71,21 +62,6 @@ export default class RRule implements QueryMethods {
     'SECONDLY'
   ]
 
-  static readonly YEARLY = Frequency.YEARLY
-  static readonly MONTHLY = Frequency.MONTHLY
-  static readonly WEEKLY = Frequency.WEEKLY
-  static readonly DAILY = Frequency.DAILY
-  static readonly HOURLY = Frequency.HOURLY
-  static readonly MINUTELY = Frequency.MINUTELY
-  static readonly SECONDLY = Frequency.SECONDLY
-
-  static readonly MO = Days.MO
-  static readonly TU = Days.TU
-  static readonly WE = Days.WE
-  static readonly TH = Days.TH
-  static readonly FR = Days.FR
-  static readonly SA = Days.SA
-  static readonly SU = Days.SU
 
   constructor (options: Partial<Options> = {}, noCache: boolean = false) {
     // RFC string

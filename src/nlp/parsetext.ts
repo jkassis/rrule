@@ -1,6 +1,6 @@
 import ENGLISH, { Language } from './i18n'
 import RRule from '../rrule'
-import { Options } from '../types'
+import { Days, Frequency, Options } from '../types'
 import { WeekdayStr } from '../weekday'
 
 // =============================================================================
@@ -184,7 +184,7 @@ export default function parseText (text: string, language: Language = ENGLISH) {
 
     switch (ttr.symbol) {
       case 'day(s)':
-        options.freq = RRule.DAILY
+        options.freq = Frequency.DAILY
         if (ttr.nextSymbol()) {
           AT()
           F()
@@ -194,20 +194,20 @@ export default function parseText (text: string, language: Language = ENGLISH) {
       // FIXME Note: every 2 weekdays != every two weeks on weekdays.
       // DAILY on weekdays is not a valid rule
       case 'weekday(s)':
-        options.freq = RRule.WEEKLY
+        options.freq = Frequency.WEEKLY
         options.byweekday = [
-          RRule.MO,
-          RRule.TU,
-          RRule.WE,
-          RRule.TH,
-          RRule.FR
+          Days.MO,
+          Days.TU,
+          Days.WE,
+          Days.TH,
+          Days.FR
         ]
         ttr.nextSymbol()
         F()
         break
 
       case 'week(s)':
-        options.freq = RRule.WEEKLY
+        options.freq = Frequency.WEEKLY
         if (ttr.nextSymbol()) {
           ON()
           F()
@@ -215,7 +215,7 @@ export default function parseText (text: string, language: Language = ENGLISH) {
         break
 
       case 'hour(s)':
-        options.freq = RRule.HOURLY
+        options.freq = Frequency.HOURLY
         if (ttr.nextSymbol()) {
           ON()
           F()
@@ -223,7 +223,7 @@ export default function parseText (text: string, language: Language = ENGLISH) {
         break
 
       case 'minute(s)':
-        options.freq = RRule.MINUTELY
+        options.freq = Frequency.MINUTELY
         if (ttr.nextSymbol()) {
           ON()
           F()
@@ -231,7 +231,7 @@ export default function parseText (text: string, language: Language = ENGLISH) {
         break
 
       case 'month(s)':
-        options.freq = RRule.MONTHLY
+        options.freq = Frequency.MONTHLY
         if (ttr.nextSymbol()) {
           ON()
           F()
@@ -239,7 +239,7 @@ export default function parseText (text: string, language: Language = ENGLISH) {
         break
 
       case 'year(s)':
-        options.freq = RRule.YEARLY
+        options.freq = Frequency.YEARLY
         if (ttr.nextSymbol()) {
           ON()
           F()
@@ -253,9 +253,9 @@ export default function parseText (text: string, language: Language = ENGLISH) {
       case 'friday':
       case 'saturday':
       case 'sunday':
-        options.freq = RRule.WEEKLY
+        options.freq = Frequency.WEEKLY
         const key: WeekdayStr = ttr.symbol.substr(0, 2).toUpperCase() as WeekdayStr
-        options.byweekday = [RRule[key]]
+        options.byweekday = [Days[key]]
 
         if (!ttr.nextSymbol()) return
 
@@ -288,7 +288,7 @@ export default function parseText (text: string, language: Language = ENGLISH) {
       case 'october':
       case 'november':
       case 'december':
-        options.freq = RRule.YEARLY
+        options.freq = Frequency.YEARLY
         options.bymonth = [decodeM() as number]
 
         if (!ttr.nextSymbol()) return
@@ -351,11 +351,11 @@ export default function parseText (text: string, language: Language = ENGLISH) {
         ttr.nextSymbol()
         if (!options.byweekday) {
           options.byweekday = [
-            RRule.MO,
-            RRule.TU,
-            RRule.WE,
-            RRule.TH,
-            RRule.FR
+            Days.MO,
+            Days.TU,
+            Days.WE,
+            Days.TH,
+            Days.FR
           ]
         }
       } else if (ttr.symbol === 'week(s)') {

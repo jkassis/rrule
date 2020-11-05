@@ -10,6 +10,16 @@ export interface QueryMethods {
 export type QueryMethodTypes = keyof QueryMethods
 export type IterResultType<M extends QueryMethodTypes> = M extends 'all' | 'between' ? Date[] : (Date | null)
 
+export const Days = {
+  MO: new Weekday(0),
+  TU: new Weekday(1),
+  WE: new Weekday(2),
+  TH: new Weekday(3),
+  FR: new Weekday(4),
+  SA: new Weekday(5),
+  SU: new Weekday(6)
+}
+
 export enum Frequency {
   YEARLY = 0,
   MONTHLY = 1,

@@ -1,4 +1,4 @@
-import { Options, ParsedOptions, freqIsDailyOrGreater } from './types'
+import { Days, Frequency, Options, ParsedOptions, freqIsDailyOrGreater } from './types'
 import { includes, notEmpty, isPresent, isNumber, isArray, isWeekdayStr } from './helpers'
 import RRule, { defaultKeys, DEFAULT_OPTIONS } from './rrule'
 import dateutil from './dateutil'
@@ -25,7 +25,7 @@ export function initializeOptions (options: Partial<Options>) {
 export function parseOptions (options: Partial<Options>) {
   const opts = { ...DEFAULT_OPTIONS, ...initializeOptions(options) }
 
-  if (isPresent(opts.byeaster)) opts.freq = RRule.YEARLY
+  if (isPresent(opts.byeaster)) opts.freq = Frequency.YEARLY
 
   if (!(isPresent(opts.freq) && RRule.FREQUENCIES[opts.freq])) {
     throw new Error(`Invalid frequency: ${opts.freq} ${options.freq}`)
@@ -34,7 +34,7 @@ export function parseOptions (options: Partial<Options>) {
   if (!opts.dtstart) opts.dtstart = new Date(new Date().setMilliseconds(0))
 
   if (!isPresent(opts.wkst)) {
-    opts.wkst = RRule.MO.weekday
+    opts.wkst = Days.MO.weekday
   } else if (isNumber(opts.wkst)) {
     // cool, just keep it like that
   } else {
@@ -66,14 +66,14 @@ export function parseOptions (options: Partial<Options>) {
     )
   ) {
     switch (opts.freq) {
-      case RRule.YEARLY:
+      case Frequency.YEARLY:
         if (!opts.bymonth) opts.bymonth = opts.dtstart.getUTCMonth() + 1
         opts.bymonthday = opts.dtstart.getUTCDate()
         break
-      case RRule.MONTHLY:
+      case Frequency.MONTHLY:
         opts.bymonthday = opts.dtstart.getUTCDate()
         break
-      case RRule.WEEKLY:
+      case Frequency.WEEKLY:
         opts.byweekday = [dateutil.getWeekday(opts.dtstart)]
         break
     }
@@ -134,7 +134,7 @@ export function parseOptions (options: Partial<Options>) {
     opts.byweekday = [Weekday.fromStr(opts.byweekday).weekday]
     opts.bynweekday = null
   } else if (opts.byweekday instanceof Weekday) {
-    if (!opts.byweekday.n || opts.freq > RRule.MONTHLY) {
+    if (!opts.byweekday.n || opts.freq > Frequency.MONTHLY) {
       opts.byweekday = [opts.byweekday.weekday]
       opts.bynweekday = null
     } else {
@@ -156,7 +156,7 @@ export function parseOptions (options: Partial<Options>) {
         continue
       }
 
-      if (!wday.n || opts.freq > RRule.MONTHLY) {
+      if (!wday.n || opts.freq > Frequency.MONTHLY) {
         byweekday.push(wday.weekday)
       } else {
         bynweekday.push([wday.weekday, wday.n])
@@ -169,7 +169,7 @@ export function parseOptions (options: Partial<Options>) {
   // byhour
   if (!isPresent(opts.byhour)) {
     opts.byhour =
-      opts.freq < RRule.HOURLY ? [opts.dtstart.getUTCHours()] : null
+      opts.freq < Frequency.HOURLY ? [opts.dtstart.getUTCHours()] : null
   } else if (isNumber(opts.byhour)) {
     opts.byhour = [opts.byhour]
   }
@@ -177,7 +177,7 @@ export function parseOptions (options: Partial<Options>) {
   // byminute
   if (!isPresent(opts.byminute)) {
     opts.byminute =
-      opts.freq < RRule.MINUTELY ? [opts.dtstart.getUTCMinutes()] : null
+      opts.freq < Frequency.MINUTELY ? [opts.dtstart.getUTCMinutes()] : null
   } else if (isNumber(opts.byminute)) {
     opts.byminute = [opts.byminute]
   }
@@ -185,7 +185,7 @@ export function parseOptions (options: Partial<Options>) {
   // bysecond
   if (!isPresent(opts.bysecond)) {
     opts.bysecond =
-      opts.freq < RRule.SECONDLY ? [opts.dtstart.getUTCSeconds()] : null
+      opts.freq < Frequency.SECONDLY ? [opts.dtstart.getUTCSeconds()] : null
   } else if (isNumber(opts.bysecond)) {
     opts.bysecond = [opts.bysecond]
   }

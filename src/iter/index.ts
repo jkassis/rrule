@@ -1,8 +1,7 @@
 import IterResult from '../iterresult'
-import { ParsedOptions, freqIsDailyOrGreater, QueryMethodTypes } from '../types'
+import { Frequency, ParsedOptions, freqIsDailyOrGreater, QueryMethodTypes } from '../types'
 import dateutil from '../dateutil'
 import Iterinfo from '../iterinfo/index'
-import RRule from '../rrule'
 import { buildTimeset } from '../parseoptions'
 import { notEmpty, includes, isPresent } from '../helpers'
 import { DateWithZone } from '../datewithzone'
@@ -184,13 +183,13 @@ function makeTimeset (ii: Iterinfo, counterDate: DateTime, options: ParsedOption
   }
 
   if (
-    (freq >= RRule.HOURLY &&
+    (freq >= Frequency.HOURLY &&
       notEmpty(byhour) &&
       !includes(byhour, counterDate.hour)) ||
-    (freq >= RRule.MINUTELY &&
+    (freq >= Frequency.MINUTELY &&
       notEmpty(byminute) &&
       !includes(byminute, counterDate.minute)) ||
-    (freq >= RRule.SECONDLY &&
+    (freq >= Frequency.SECONDLY &&
       notEmpty(bysecond) &&
       !includes(bysecond, counterDate.second))
   ) {
