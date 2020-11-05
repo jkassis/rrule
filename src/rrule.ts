@@ -14,31 +14,6 @@ import { iter } from './iter/index'
 // RRule
 // =============================================================================
 
-
-export const DEFAULT_OPTIONS: Options = {
-  freq: Frequency.YEARLY,
-  dtstart: null,
-  interval: 1,
-  wkst: Days.MO,
-  count: null,
-  until: null,
-  tzid: null,
-  bysetpos: null,
-  bymonth: null,
-  bymonthday: null,
-  bynmonthday: null,
-  byyearday: null,
-  byweekno: null,
-  byweekday: null,
-  bynweekday: null,
-  byhour: null,
-  byminute: null,
-  bysecond: null,
-  byeaster: null
-}
-
-export const defaultKeys = Object.keys(DEFAULT_OPTIONS) as (keyof Options)[]
-
 /**
  *
  * @param {Options?} options - see <http://labix.org/python-dateutil/#head-cf004ee9a75592797e076752b2a889c10f445418>
@@ -51,17 +26,6 @@ export default class RRule implements QueryMethods {
   public options: ParsedOptions
 
   // RRule class 'constants'
-
-  static readonly FREQUENCIES: (keyof typeof Frequency)[] = [
-    'YEARLY',
-    'MONTHLY',
-    'WEEKLY',
-    'DAILY',
-    'HOURLY',
-    'MINUTELY',
-    'SECONDLY'
-  ]
-
 
   constructor (options: Partial<Options> = {}, noCache: boolean = false) {
     // RFC string

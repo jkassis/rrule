@@ -1,5 +1,4 @@
-import { Options } from './types'
-import RRule, { DEFAULT_OPTIONS } from './rrule'
+import { FREQUENCIES, Options, DEFAULT_OPTIONS, defaultKeys } from './types'
 import { includes, isPresent, isArray, isNumber, toArray } from './helpers'
 import { Weekday } from './weekday'
 import dateutil from './dateutil'
@@ -23,7 +22,7 @@ export function optionsToString (options: Partial<Options>) {
 
     switch (key) {
       case 'FREQ':
-        outValue = RRule.FREQUENCIES[options.freq!]
+        outValue = FREQUENCIES[options.freq!]
         break
       case 'WKST':
         if (isNumber(value)) {

@@ -1,6 +1,5 @@
-import { Days, Frequency, Options, ParsedOptions, freqIsDailyOrGreater } from './types'
+import { Days, FREQUENCIES, Frequency, DEFAULT_OPTIONS, defaultKeys, Options, ParsedOptions, freqIsDailyOrGreater } from './types'
 import { includes, notEmpty, isPresent, isNumber, isArray, isWeekdayStr } from './helpers'
-import RRule, { defaultKeys, DEFAULT_OPTIONS } from './rrule'
 import dateutil from './dateutil'
 import { Weekday } from './weekday'
 import { Time } from './datetime'
@@ -27,7 +26,7 @@ export function parseOptions (options: Partial<Options>) {
 
   if (isPresent(opts.byeaster)) opts.freq = Frequency.YEARLY
 
-  if (!(isPresent(opts.freq) && RRule.FREQUENCIES[opts.freq])) {
+  if (!(isPresent(opts.freq) && FREQUENCIES[opts.freq])) {
     throw new Error(`Invalid frequency: ${opts.freq} ${options.freq}`)
   }
 

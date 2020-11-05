@@ -30,6 +30,16 @@ export enum Frequency {
   SECONDLY = 6
 }
 
+export const FREQUENCIES: (keyof typeof Frequency)[] = [
+  'YEARLY',
+  'MONTHLY',
+  'WEEKLY',
+  'DAILY',
+  'HOURLY',
+  'MINUTELY',
+  'SECONDLY'
+]
+
 export function freqIsDailyOrGreater (freq: Frequency): freq is Frequency.YEARLY | Frequency.MONTHLY | Frequency.WEEKLY | Frequency.DAILY {
   return freq < Frequency.HOURLY
 }
@@ -55,6 +65,30 @@ export interface Options {
   bysecond: number | number[] | null
   byeaster: number | null
 }
+
+export const DEFAULT_OPTIONS: Options = {
+  freq: Frequency.YEARLY,
+  dtstart: null,
+  interval: 1,
+  wkst: Days.MO,
+  count: null,
+  until: null,
+  tzid: null,
+  bysetpos: null,
+  bymonth: null,
+  bymonthday: null,
+  bynmonthday: null,
+  byyearday: null,
+  byweekno: null,
+  byweekday: null,
+  bynweekday: null,
+  byhour: null,
+  byminute: null,
+  bysecond: null,
+  byeaster: null
+}
+
+export const defaultKeys = Object.keys(DEFAULT_OPTIONS) as (keyof Options)[]
 
 export interface ParsedOptions extends Options {
   dtstart: Date
