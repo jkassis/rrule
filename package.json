@@ -44,6 +44,8 @@
     "all": true
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "@rollup/plugin-typescript": "^6.1.0",   "nyc": "^14.1.1",
     "@types/assert": "^1.4.3",
     "@types/chai": "^4.2.7",
     "@types/jquery": "^3.3.29",
@@ -59,7 +61,6 @@
     "jquery": "^3.3.1",
     "mocha": "^6.2.2",
     "mockdate": "^2.0.5",
-    "nyc": "^14.1.1",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.16",
     "ts-loader": "^6.2.1",
@@ -81,7 +82,7 @@
     "README.md"
   ],
   "optionalDependencies": {
-    "luxon": "^1.21.3"
+    "luxon": "^1.25.0"
   },
   "peerDependencies": {},
   "dependencies": {
