@@ -13,18 +13,6 @@ import { Cache, CacheKeys } from './cache'
 import { Weekday } from './weekday'
 import { iter } from './iter/index'
 
-interface GetNlp {
-  _nlp: Nlp
-  (): Nlp
-}
-
-const getnlp: GetNlp = function () {
-  // Lazy, runtime import to avoid circular refs.
-  if (!getnlp._nlp) {
-    getnlp._nlp = require('./nlp')
-  }
-  return getnlp._nlp
-} as GetNlp
 
 // =============================================================================
 // RRule
@@ -114,11 +102,11 @@ export default class RRule implements QueryMethods {
   }
 
   static parseText (text: string, language?: Language) {
-    return getnlp().parseText(text, language)
+    return Nlp.parseText(text, language)
   }
 
   static fromText (text: string, language?: Language) {
-    return getnlp().fromText(text, language)
+    return Nlp.fromText(text, language)
   }
 
   static parseString = parseString
@@ -256,11 +244,11 @@ export default class RRule implements QueryMethods {
    * to text.
    */
   toText (gettext?: GetText, language?: Language, dateFormatter?: DateFormatter) {
-    return getnlp().toText(this, gettext, language, dateFormatter)
+    return Nlp.toText(this, gettext, language, dateFormatter)
   }
 
   isFullyConvertibleToText () {
-    return getnlp().isFullyConvertible(this)
+    return Nlp.isFullyConvertible(this)
   }
 
   /**

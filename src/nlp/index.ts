@@ -123,13 +123,11 @@ const toText = function (rrule: RRule, gettext?: GetText, language?: Language, d
   return new ToText(rrule, gettext, language, dateFormatter).toString()
 }
 
-const { isFullyConvertible } = ToText
+export const { isFullyConvertible } = ToText
 
-export interface Nlp {
+export var Nlp: {
   fromText: typeof fromText
   parseText: typeof parseText
   isFullyConvertible: typeof isFullyConvertible
   toText: typeof toText
-}
-
-export { fromText, parseText, isFullyConvertible, toText }
+} = { fromText, parseText, isFullyConvertible, toText }
