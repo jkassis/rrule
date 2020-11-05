@@ -40,7 +40,6 @@ const toText = function (rrule: RRule, gettext?: GetText, language?: Language, d
   return new ToText(rrule, gettext, language, dateFormatter).toString()
 }
 
-
 function fromText (text: string, language ?: Language) {
   return new RRule(parseText(text, language) || undefined)
 }

@@ -27,5 +27,4 @@ export { Frequency, ByWeekday, Options } from './types'
 export { Weekday, WeekdayStr } from './weekday'
 export { RRuleStrOptions } from './rrulestr'
 
-
 export default RRule
