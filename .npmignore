@@ -1,0 +1,15 @@
+demo
+node_modules
+src
+test
+tags
+bower.json
+codecov.yml
+index.html
+rollup.config.js
+tsconfig.*
+tslint.*
+webpack.*
+yarn.*
+*.tsbuildinfo
+yarn-error.log

@@ -110,4 +110,4 @@ const demoConfig = {
   mode: "production"
 };
 
-module.exports = [rruleConfig, rruleWithLuxonConfig, demoConfig];
+module.exports = [rruleConfig ];
