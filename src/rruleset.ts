@@ -4,7 +4,6 @@ import { includes } from './helpers'
 import IterResult from './iterresult'
 import { iterSet } from './iterset'
 import { QueryMethodTypes, IterResultType } from './types'
-import { rrulestr } from './rrulestr'
 import { optionsToString } from './optionstostring'
 
 function createGetterSetter <T> (fieldName: string) {
@@ -106,7 +105,7 @@ export default class RRuleSet extends RRule {
    * @return List of rrules
    */
   rrules () {
-    return this._rrule.map(e => rrulestr(e.toString()))
+    return this._rrule
   }
 
   /**
@@ -115,7 +114,7 @@ export default class RRuleSet extends RRule {
    * @return List of exrules
    */
   exrules () {
-    return this._exrule.map(e => rrulestr(e.toString()))
+    return this._exrule
   }
 
   /**
