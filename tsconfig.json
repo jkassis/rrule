@@ -10,7 +10,7 @@
     "noImplicitAny": true,
     "outDir": "dist/esm",
     "rootDirs": ["./src/"],
-    "sourceMap": true,
+    "sourceMap": false,
     "strictNullChecks": true,
     "target": "ESNext",
   },
