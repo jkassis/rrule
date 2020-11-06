@@ -1,8 +1,10 @@
 import { expect } from 'chai'
 import { DateTime } from 'luxon'
-import RRule from '../src';
+import RRule, { Frequency } from '../src';
 import { optionsToString } from '../src/optionstostring';
-import {DateFormatter} from '../src/nlp/totext'
+import { DateFormatter } from '../src/nlp/totext'
+import { NLP } from '../src/nlp'
+import { Days } from '../src/types';
 
 const texts = [
   ['Every day', 'RRULE:FREQ=DAILY'],
@@ -34,7 +36,7 @@ describe('NLP', () => {
     texts.forEach(function (item) {
       const text = item[0]
       const str = item[1]
-      expect(RRule.fromText(text).toString()).equals(str, text + ' => ' + str)
+      expect(NLP.fromText(text).toString()).equals(str, text + ' => ' + str)
     })
   })
 
@@ -42,7 +44,7 @@ describe('NLP', () => {
     texts.forEach(function (item) {
       const text = item[0]
       const str = item[1]
-      expect(RRule.fromString(str).toText().toLowerCase()).equals(text.toLowerCase(),
+      expect(NLP.toText(RRule.fromString(str)).toLowerCase()).equals(text.toLowerCase(),
         str + ' => ' + text)
     })
   })
@@ -51,63 +53,65 @@ describe('NLP', () => {
     texts.forEach(function (item) {
       const text = item[0]
       const str = item[1]
-      expect(optionsToString(RRule.parseText(text))).equals(str, text + ' => ' + str)
+      expect(optionsToString(NLP.parseText(text))).equals(str, text + ' => ' + str)
     })
   })
 
   it('permits integers in byweekday (#153)', () => {
     const rrule = new RRule({
-      freq: RRule.WEEKLY,
+      freq: Frequency.WEEKLY,
       byweekday: 0
     })
 
-    expect(rrule.toText()).to.equal('every week on Monday')
+    expect(NLP.toText(rrule)).to.equal('every week on Monday')
     expect(rrule.toString()).to.equal('RRULE:FREQ=WEEKLY;BYDAY=MO')
   })
 
   it('sorts monthdays correctly (#101)', () => {
     const options = { "freq": 2, "bymonthday": [3, 10, 17, 24] }
     const rule = new RRule(options)
-    expect(rule.toText()).to.equal('every week on the 3rd, 10th, 17th and 24th')
+    expect(NLP.toText(rule)).to.equal('every week on the 3rd, 10th, 17th and 24th')
   })
 
   it('shows correct text for every day', () => {
-    const options = { "freq": RRule.WEEKLY, byweekday: [
-      RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA, RRule.SU
-    ]}
+    const options = {
+      "freq": Frequency.WEEKLY, byweekday: [
+        Days.MO, Days.TU, Days.WE, Days.TH, Days.FR, Days.SA, Days.SU
+      ]
+    }
     const rule = new RRule(options)
-    expect(rule.toText()).to.equal('every day')
+    expect(NLP.toText(rule)).to.equal('every day')
   })
 
   it('shows correct text for every minute', () => {
-    const options = { 'freq': RRule.MINUTELY };
+    const options = { 'freq': Frequency.MINUTELY };
     const rule = new RRule(options);
-    expect(rule.toText()).to.equal('every minute');
+    expect(NLP.toText(rule)).to.equal('every minute');
   });
 
   it('shows correct text for every (plural) minutes', () => {
-    const options = { 'freq': RRule.MINUTELY, 'interval': 2 };
+    const options = { 'freq': Frequency.MINUTELY, 'interval': 2 };
     const rule = new RRule(options);
-    expect(rule.toText()).to.equal('every 2 minutes');
+    expect(NLP.toText(rule)).to.equal('every 2 minutes');
   });
 
   it('by default formats \'until\' correctly', () => {
     const rrule = new RRule({
-      freq: RRule.WEEKLY,
+      freq: Frequency.WEEKLY,
       until: DateTime.utc(2012, 11, 10).toJSDate()
     })
 
-    expect(rrule.toText()).to.equal('every week until November 10, 2012')
+    expect(NLP.toText(rrule)).to.equal('every week until November 10, 2012')
   })
 
   it('formats \'until\' as desired if asked', () => {
     const rrule = new RRule({
-      freq: RRule.WEEKLY,
+      freq: Frequency.WEEKLY,
       until: DateTime.utc(2012, 11, 10).toJSDate()
     })
 
     const dateFormatter: DateFormatter = (year, month, day) => `${day}. ${month}, ${year}`
 
-    expect(rrule.toText(undefined, undefined, dateFormatter)).to.equal('every week until 10. November, 2012')
+    expect(NLP.toText(rrule, undefined, undefined, dateFormatter)).to.equal('every week until 10. November, 2012')
   })
 })

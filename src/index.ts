@@ -16,7 +16,7 @@
 
 import RRule from './rrule'
 import RRuleSet from './rruleset'
-export { NLP } from './nlp/index'
+export { NLP } from './nlp/index.js'
 export {
   RRule,
   RRuleSet
